@@ -1,57 +1,31 @@
 import './App.css'
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import AuthorsPage from "./pages/authors/AuthorsPage.jsx";
+import Navbar from "./components/Navbar.jsx";
+import CategoriesPage from "./pages/category/CategoriesPage.jsx";
+import {Routes,Route} from "react-router";
+import BooksPage from "./pages/book/BooksPage.jsx";
 
 function App() {
-  const  [authors,setAuthors] = useState([])
-
-    useEffect(()=>{
-        axios.get("http://localhost:5078/api/Authors/getall")
-            .then(data=> setAuthors(data.data))
-        console.log(authors)
-    },[])
 
 
 
 
   return (
-    <>
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-
-                        <TableCell align="right">Adı</TableCell>
-                        <TableCell align="right">Soyadı</TableCell>
-                        <TableCell align="right">Doğduğu Yıl</TableCell>
-                        <TableCell align="right">Doğduğu Gün</TableCell>
-                        <TableCell align="right">Doğduğu Ay</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
+    <Container>
+        <Navbar/>
 
 
-                    {
-                        authors.map(author=>(
+        <Routes>
 
-                            <TableRow key={author.id}>
-                                <TableCell align="right">{author.firstName}</TableCell>
-                                <TableCell align="right">{author.surName}</TableCell>
-                                <TableCell align="right">{author.birthYear}</TableCell>
-                                <TableCell align="right">{author.birthDay}</TableCell>
-                                <TableCell align="right">{author.birthMonth}</TableCell>
-
-
-                            </TableRow>
-
-                        ))
-                    }
-
-                </TableBody>
-            </Table>
-        </TableContainer>
-    </>
+            <Route path={"/books"}  element={<BooksPage/>}/>
+            <Route path={"/"}  element={<BooksPage/>}/>
+            <Route path={"/categories"}  element={<CategoriesPage/>}/>
+            <Route path={"/authors"}  element={<AuthorsPage/>}/>
+        </Routes>
+    </Container>
   )
 }
 
